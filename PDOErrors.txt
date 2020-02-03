@@ -1,0 +1,17 @@
+
+3 February, 2020, 10:51 am SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tienda.producto' doesn't exist
+3 February, 2020, 10:51 am SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tienda.producto' doesn't exist
+3 February, 2020, 10:51 am SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tienda.producto' doesn't exist
+3 February, 2020, 10:52 am SQLSTATE[HY000] [1049] Unknown database 'grupito'
+3 February, 2020, 10:52 am SQLSTATE[HY000] [1049] Unknown database 'grupito'
+3 February, 2020, 10:52 am SQLSTATE[HY000] [1049] Unknown database 'grupito'
+3 February, 2020, 10:52 am SQLSTATE[HY000] [1049] Unknown database 'grupito'
+3 February, 2020, 10:52 am SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tienda.producto' doesn't exist
+3 February, 2020, 10:52 am SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tienda.producto' doesn't exist
+3 February, 2020, 10:52 am SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tienda.producto' doesn't exist
+3 February, 2020, 10:52 am SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tienda.producto' doesn't exist
+3 February, 2020, 10:52 am SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tienda.producto' doesn't exist
+3 February, 2020, 10:52 am SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tienda.producto' doesn't exist
+3 February, 2020, 10:52 am SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tienda.producto' doesn't exist
+3 February, 2020, 10:52 am SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tienda.producto' doesn't exist
+3 February, 2020, 10:52 am SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tienda.producto' doesn't exist
