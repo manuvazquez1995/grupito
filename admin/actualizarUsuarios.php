@@ -30,11 +30,11 @@
   </div>
   <div class="form-group">
     <label for="nombre">Nombre</label>
-    <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $nombre; ?>" readonly="readonly"/>
+    <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $nombre; ?>"/>
   </div>
   <div class="form-group">
     <label for="apellidos">Apellidos</label>
-    <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $apellidos; ?>" readonly="readonly"/>
+    <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $apellidos; ?>"/>
   </div>
   <div class="form-group">
     <label for="direccion">Dirección</label>
@@ -56,7 +56,7 @@
 	
 	<?php 
 	//formularioUsuarios($mail,$password,$newPassword1,$newPassword2,$nombre,$apellidos,$direccion,$telefono)
-		if(isset($_REQUEST["guardar"])){
+		if(!isset($_REQUEST["guardar"])){
 		
 			$mail = recoge('mail');
 		
@@ -72,7 +72,7 @@
 				exit();
 			}
 			
-			$password = $usuario['password'];
+			$password = "";
 			$newPassword1 = "";
 			$newPassword2 = "";
 			$nombre = $usuario['nombre'];
@@ -105,9 +105,9 @@
 						
 		}else{
 			$user = seleccionarUser($mail);
-			$password = password_verify($password, $usuario['password']);
-						
-			if(!$password){
+			$okPass = password_verify($password, $user['password']);
+									
+			if(!$okPass){
 			echo "<div class=\"alert alert-danger\" role=\"alert\">La contraseña no coincide con la guardada en la base de datos</div>";
 			formularioUsuarios($mail,$password,$newPassword1,$newPassword2,$nombre,$apellidos,$direccion,$telefono);
 							

@@ -143,7 +143,66 @@ function seleccionarOfertasPortada($numOfertas){
 		}
 	return $rows;
 }
+
+
+// PARA SACAR TODAS LAS OFERTAS DEL INDEX
+function seleccionarTodasOfertas(){
 	
+	$con = conectarBD();
+	
+	try{
+				$sql = "SELECT * FROM productos";
+				
+				$stmt=$con->prepare($sql);
+				$stmt->execute();
+				
+				$rows = $stmt -> fetchAll(PDO::FETCH_ASSOC); //Si sabemos que devuelve una sola fila, no se puede poner "fetchAll"
+		
+		}catch(PDOException $e){
+				echo "Error: Error al seleccionar los productos: ".$e->getMessage();
+				file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+				exit;
+		}
+	return $rows;
+}
+
+
+//FUNCIÓN PARA MOSTRAR LOS DATOS DE UN PRODUCTOS
+function seleccionarProducto($idProducto){
+	
+	$con = conectarBD();
+	
+	try{
+				$sql = "SELECT * FROM productos WHERE idProducto=:idProducto";
+				
+				$stmt=$con->prepare($sql);
+				$stmt->bindParam(':idProducto',$idProducto, PDO::PARAM_INT);
+				$stmt->execute();
+				
+				$row = $stmt -> fetch(PDO::FETCH_ASSOC); //Si sabemos que devuelve una sola fila, no se puede poner "fetchAll"
+		
+		}catch(PDOException $e){
+				echo "Error: Error al seleccionar los los datos del producto: ".$e->getMessage();
+				file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+				exit;
+		}
+	return $row;
+} //Fin funcion seleccionarProducto
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
