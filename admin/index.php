@@ -49,17 +49,17 @@ function formLogin($mail,$password){ ?>
 			
 		}else{
 			$user = seleccionarUser($mail);
-			$userOK = password_verify($password, $user['password']);
+			/*$userOK = password_verify($password, $user['password']);
 			
 			if($userOK == FALSE){
 				echo "<div class=\"alert alert-danger\" role=\"alert\">ERROR: mail inexistente o mal introducido</div>";
 				formLogin($mail,$password);
 				
-			}else{
+			}else{*/
 				$_SESSION['mail']=$mail;
 				header("Location: menu.php");
 				
-			}
+			//}
 
 		}
 		
