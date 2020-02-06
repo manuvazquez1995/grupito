@@ -94,13 +94,13 @@ function seleccionarUser($mail){
 
 
 //FUNCIÓN PARA ACTUALIZAR UN USUARIO
-function actualizarUser($mail,$newPassword1,$nombre,$apellidos,$direccion,$telefono){
+function actualizarUser($mail,$newPassword1,$nombre,$apellidos,$direccion,$telefono,$online){
 		$con = conectarBD();
 		
 		$newPassword1 = password_hash($newPassword1, PASSWORD_DEFAULT);
 		
 		try{
-		$sql = "UPDATE usuarios SET email=:mail, password=:newPassword1, nombre=:nombre, apellidos=:apellidos, direccion=:direccion, telefono=:telefono WHERE email=:mail";
+		$sql = "UPDATE usuarios SET email=:mail, password=:newPassword1, nombre=:nombre, apellidos=:apellidos, direccion=:direccion, telefono=:telefono, online=:online WHERE email=:mail";
 		
 		$stmt=$con->prepare($sql);
 		
@@ -110,6 +110,7 @@ function actualizarUser($mail,$newPassword1,$nombre,$apellidos,$direccion,$telef
 		$stmt->bindParam(':apellidos',$apellidos);
 		$stmt->bindParam(':direccion',$direccion);
 		$stmt->bindParam(':telefono',$telefono);
+		$stmt->bindParam(':online',$online);
 		
 		$stmt->execute(); 
 		

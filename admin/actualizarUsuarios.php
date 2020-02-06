@@ -1,15 +1,17 @@
 <?php 
+session_start();
+
 	require_once "inc/bbdd.php";
 	require_once "inc/funciones.php";
 	require_once "inc/encabezado.php";
 	
 	
-	/*if(!isset($_SESSION['usuario'])){
+	if(!isset($_SESSION['mail'])){
 		header("Location:index.php");
-	}else{*/
+	}else{
 	
 	
-	function formularioUsuarios($mail,$password,$newPassword1,$newPassword2,$nombre,$apellidos,$direccion,$telefono){
+	function formularioUsuarios($mail,$password,$newPassword1,$newPassword2,$nombre,$apellidos,$direccion,$telefono,$online){
 ?>
 	<form method="post">
 	<div class="form-group">
@@ -44,6 +46,10 @@
     <label for="telefono">Teléfono</label>
     <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $telefono; ?>" />
   </div>
+	<div>
+				<label for="online">Online: </label>
+				<input type="checkbox" id="online" name="online" <?php if($online){echo "checked='checked'";} ?>/>
+	</div>
 	<button type="submit" class="btn btn-primary" name="guardar" value="guardar">Guardar</button>
 	<a href='usuarios.php' class='btn btn-danger'>Cancelar</a>
 	</form>
@@ -79,8 +85,9 @@
 			$apellidos = $usuario['apellidos'];
 			$direccion = $usuario['direccion'];
 			$telefono = $usuario['telefono'];
+			$online = $usuario['online'];
 			
-			formularioUsuarios($mail,$password,$newPassword1,$newPassword2,$nombre,$apellidos,$direccion,$telefono);
+			formularioUsuarios($mail,$password,$newPassword1,$newPassword2,$nombre,$apellidos,$direccion,$telefono,$online);
 		}else{
 			$mail = recoge('mail');
 			$password = recoge('password');
@@ -90,6 +97,7 @@
 			$apellidos = recoge('apellidos');
 			$direccion = recoge('direccion');
 			$telefono = recoge('telefono');
+			$online = recoge('online');
 			
 			$errores = "";
 		if($mail=="" or $password=="" or $newPassword1=="" or $newPassword2=="" or $nombre=="" or $apellidos=="" or $direccion=="" or $apellidos==""){
@@ -101,7 +109,7 @@
 		}
 		if($errores != ""){
 			echo "<div class=\"alert alert-danger\" role=\"alert\">ERROR: $errores</div>";
-			formularioUsuarios($mail,$password,$newPassword1,$newPassword2,$nombre,$apellidos,$direccion,$telefono);
+			formularioUsuarios($mail,$password,$newPassword1,$newPassword2,$nombre,$apellidos,$direccion,$telefono,$online);
 						
 		}else{
 			$user = seleccionarUser($mail);
@@ -109,10 +117,10 @@
 									
 			if(!$okPass){
 			echo "<div class=\"alert alert-danger\" role=\"alert\">La contraseña no coincide con la guardada en la base de datos</div>";
-			formularioUsuarios($mail,$password,$newPassword1,$newPassword2,$nombre,$apellidos,$direccion,$telefono);
+			formularioUsuarios($mail,$password,$newPassword1,$newPassword2,$nombre,$apellidos,$direccion,$telefono,$online);
 							
 			}else{
-				$ok = actualizarUser($mail,$newPassword1,$nombre,$apellidos,$direccion,$telefono);
+				$ok = actualizarUser($mail,$newPassword1,$nombre,$apellidos,$direccion,$telefono,$online);
 				if($ok){
 					echo "<div class=\"alert alert-success\" role=\"alert\">Usuario $mail actualizado correctamente</div>";
 					echo "<p><a href='usuarios.php' class='btn btn-primary'>Volver al listado</a></p>";
@@ -120,7 +128,7 @@
 				}else{
 					echo "<div class=\"alert alert-danger\" role=\"alert\">ERROR: Usuario NO actualizado</div>";
 					echo "";
-					formularioUsuarios($mail,$password,$newPassword1,$newPassword2,$nombre,$apellidos,$direccion,$telefono);
+					formularioUsuarios($mail,$password,$newPassword1,$newPassword2,$nombre,$apellidos,$direccion,$telefono,$online);
 				}
 										
 			}
@@ -133,4 +141,4 @@
 	</main>
 
 <?php require_once "inc/pie.php"; ?>
-	<?php /*}*/ ?>
+	<?php } ?>

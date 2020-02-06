@@ -7,7 +7,9 @@
 	foreach($productos as $producto){
 ?>
   <div class="col mb-4">
-    <div class="card">
+	
+    <div class="card h-100">
+		
       <img src="imagenes/<?php echo $producto['imagen']; ?>" class="card-img-top" alt="<?php echo $producto['nombre']; ?>">
       <div class="card-body">
         <h5 class="card-title"><?php echo $producto['nombre']; ?></h5>
@@ -15,7 +17,8 @@
 		<a href="producto.php?id=<?php echo $producto['idProducto']; ?>" class="btn btn-success">Ahora <?php echo $producto['precioOferta']; ?>€</a>
 		<span class="card-text text-danger float-right"><del>Antes <?php echo $producto['precio']; ?>€</del></span>
       </div>
-    </div>
+		</div>
+    
   </div>
 	<?php 
 		}

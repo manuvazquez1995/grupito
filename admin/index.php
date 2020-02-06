@@ -48,9 +48,7 @@ function formLogin($mail,$password){ ?>
 			formLogin($mail,$password);
 			
 		}else{
-			header("Location: productos.php");
-			
-			/*$user = seleccionarUser($mail);
+			$user = seleccionarUser($mail);
 			$userOK = password_verify($password, $user['password']);
 			
 			if($userOK == FALSE){
@@ -61,7 +59,7 @@ function formLogin($mail,$password){ ?>
 				$_SESSION['mail']=$mail;
 				header("Location: menu.php");
 				
-			}*/
+			}
 
 		}
 		
@@ -71,5 +69,5 @@ function formLogin($mail,$password){ ?>
 </main>
 
 <?php 
-	require_once "inc/pie.php"
+	require_once "inc/pie.php";
 ?>

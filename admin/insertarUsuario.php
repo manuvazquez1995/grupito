@@ -1,12 +1,14 @@
 <?php 
+	session_start();
+
 	require_once "inc/bbdd.php";
 	require_once "inc/funciones.php";
 	require_once "inc/encabezado.php";
 	
 	
-	/*if(!isset($_SESSION['usuario'])){
+	if(!isset($_SESSION['mail'])){
 		header("Location:index.php");
-	}else{*/
+	}else{
 	
 	
 	function formularioInsertarUsuarios($mail,$password1,$password2,$nombre,$apellidos,$direccion,$telefono){
@@ -74,4 +76,4 @@
 	</main>
 	
 	<?php require_once "inc/pie.php"; ?>
-	<?php /*}*/ ?>
+	<?php } ?>
