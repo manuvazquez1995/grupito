@@ -1,9 +1,7 @@
 <?php 
 	require_once "bbdd/bbdd.php";
-	require_once("inc/encabezado.php");
 	require_once("inc/funciones.php");
-?>	
-<?php
+	
 	$idProducto = recoge('id'); //Recojo el id de la url
 	$producto = seleccionarProducto($idProducto);
 	
@@ -14,7 +12,15 @@
 	$precio = $producto['precio'];
 	$precioOferta = $producto['precioOferta'];
 	$online = $producto['online'];
-?>
+
+	
+	$pagina = "productos";
+	$titulo = $nombre;
+	
+	require_once("inc/encabezado.php");
+	
+?>	
+
 
 <main role="main">
 

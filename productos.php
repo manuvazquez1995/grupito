@@ -1,5 +1,9 @@
 <?php 
 	require_once "bbdd/bbdd.php";
+	
+	$pagina = "productos";
+	$titulo = "Todas nuestras ofertas";
+	
 	require_once("inc/encabezado.php");
 	require_once("inc/funciones.php");
 ?>	
