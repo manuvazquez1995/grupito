@@ -63,7 +63,7 @@
 				formularioInsertarUsuarios($mail,$password1,$password2,$nombre,$apellidos,$direccion,$telefono);
 				
 			}else{
-				$mail = recoge('mail');;
+				$mail = recoge('mail');
 				$password1= recoge('password1');
 				$password2=recoge('password2');
 				$nombre = recoge('nombre');
@@ -72,7 +72,7 @@
 				$telefono=recoge('telefono');
 				
 				$errores = "";
-				if($mail=="" or $password1=="" or $password2=="" or $nombre=="nombre" or $apellidos=="" or $direccion=="" or $telefono=="" ){
+				if($mail=="" or $password1=="" or $password2=="" or $nombre=="" or $apellidos=="" or $direccion=="" or $telefono=="" ){
 					$errores = $errores."<li>Todos los campos son obligatorios.</li>";
 				}
 				
