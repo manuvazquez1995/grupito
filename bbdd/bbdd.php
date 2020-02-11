@@ -191,7 +191,33 @@ function seleccionarProducto($idProducto){
 
 
 
+function insertarUsuario($mail,$password2,$nombre,$apellidos,$direccion,$telefono){
 
+	$con = conectarBD();
+	
+	$pass = password_hash($password2, PASSWORD_DEFAULT);
+	
+	try{
+				$sql = "INSERT INTO usuarios (mail,password,nombre,apellidos,direccion,telefono) VALUES (:mail,:password2,:nombre,:apellidos,:direccion,:telefono);";
+				
+				$stmt = $con->prepare($sql);
+				
+				$stmt->bindParam(':mail',$mail);
+				$stmt->bindParam(':password2',$password2);
+				$stmt->bindParam(':nombre',$nombre);
+				$stmt->bindParam(':apellidos',$apellidos);
+				$stmt->bindParam(':direccion',$direccion);
+				$stmt->bindParam(':telefono',$telefono);
+				
+				$stmt->execute();
+		
+		}catch(PDOException $e){
+				echo "Error: Error al insertar un usuario: ".$e->getMessage();
+				file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+				exit;
+		}
+		return $stmt->rowCount();
+}
 
 
 
