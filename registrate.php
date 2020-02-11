@@ -17,12 +17,12 @@
     <input type="text" class="form-control" id="mail" name="mail" autofocus="autofocus"/>
   </div>
 	<div class="form-group">
-    <label for="newPassword1">Contraseña nueva</label>
-    <input type="password" class="form-control" id="newPassword1" name="newPassword1" />
+    <label for="password1">Contraseña nueva</label>
+    <input type="password" class="form-control" id="password1" name="password1" />
   </div>
 	<div class="form-group">
-    <label for="newPassword2">Repite contraseña nueva</label>
-    <input type="password" class="form-control" id="newPassword2" name="newPassword2" />
+    <label for="password2">Repite contraseña nueva</label>
+    <input type="password" class="form-control" id="password2" name="password2" />
   </div>
   <div class="form-group">
     <label for="nombre">Nombre</label>
