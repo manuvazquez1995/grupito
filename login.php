@@ -10,6 +10,7 @@
 
 function formLogin($mail,$password){ 
 ?>
+	<a href="registrate.php" class="btn btn-success text-justify">Regístrate</a>
 		<form action="" method="post">
 			<div class="form-group">
 				<label for="mail">mail</label>

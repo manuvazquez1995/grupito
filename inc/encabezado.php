@@ -76,12 +76,13 @@
 			</li>
 			
 			<?php 
-				if(isset($_SESSION['usuario'])){
+				if(isset($_SESSION['mail'])){
+					$mail = $_SESSION['mail'];
 			?>		
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bienvenido Fulanito</a>
+						<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bienvenido <?php echo $mail; ?></a>
 						<div class="dropdown-menu" aria-labelledby="dropdown01">
-								<a class="dropdown-item" href="misDatos.php">Mis datos</a>
+								<a class="dropdown-item" href="misDatos.php?mail=<?php echo $mail; ?>">Mis datos</a>
 								<a class="dropdown-item" href="misPedidos.php">Mis pedidos</a>
 								<a class="dropdown-item" href="logout.php">Cerrar sesión</a>
 						</div>

@@ -85,7 +85,7 @@
 					
 					if($userOK){
 						echo "<div class=\"alert alert-success\" role=\"alert\">Usuario $mail insertado correctamente</div>";
-						echo "<p><a href='gestionUsers.php' class='btn btn-primary'>Volver al listado</a></p>";
+						echo "<p><a href='login.php' class='btn btn-primary'>Iniciar sesión</a></p>";
 						
 					}else{
 						echo "<div class=\"alert alert-danger\" role=\"alert\">ERROR: Usuario NO insertado</div>";

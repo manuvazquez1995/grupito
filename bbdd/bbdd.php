@@ -94,18 +94,18 @@ function seleccionarUser($mail){
 
 
 //FUNCIÓN PARA ACTUALIZAR UN USUARIO
-function actualizarUser($mail,$newPassword1,$nombre,$apellidos,$direccion,$telefono){
+function actualizarUser($mail,$password2,$nombre,$apellidos,$direccion,$telefono){
 		$con = conectarBD();
 		
-		$newPassword1 = password_hash($newPassword1, PASSWORD_DEFAULT);
+		$pass = password_hash($password2, PASSWORD_DEFAULT);
 		
 		try{
-		$sql = "UPDATE usuarios SET email=:mail, password=:newPassword1, nombre=:nombre, apellidos=:apellidos, direccion=:direccion, telefono=:telefono WHERE email=:mail";
+		$sql = "UPDATE usuarios SET email=:mail, password=:pass, nombre=:nombre, apellidos=:apellidos, direccion=:direccion, telefono=:telefono WHERE email=:mail";
 		
 		$stmt=$con->prepare($sql);
 		
 		$stmt->bindParam(':mail',$mail);
-		$stmt->bindParam(':newPassword1',$newPassword1);
+		$stmt->bindParam(':pass',$pass);
 		$stmt->bindParam(':nombre',$nombre);
 		$stmt->bindParam(':apellidos',$apellidos);
 		$stmt->bindParam(':direccion',$direccion);
@@ -198,12 +198,12 @@ function insertarUsuario($mail,$password2,$nombre,$apellidos,$direccion,$telefon
 	$pass = password_hash($password2, PASSWORD_DEFAULT);
 	
 	try{
-				$sql = "INSERT INTO usuarios (mail,password,nombre,apellidos,direccion,telefono) VALUES (:mail,:password2,:nombre,:apellidos,:direccion,:telefono);";
+				$sql = "INSERT INTO usuarios (email,password,nombre,apellidos,direccion,telefono) VALUES (:mail,:pass,:nombre,:apellidos,:direccion,:telefono);";
 				
 				$stmt = $con->prepare($sql);
 				
 				$stmt->bindParam(':mail',$mail);
-				$stmt->bindParam(':password2',$password2);
+				$stmt->bindParam(':pass',$pass);
 				$stmt->bindParam(':nombre',$nombre);
 				$stmt->bindParam(':apellidos',$apellidos);
 				$stmt->bindParam(':direccion',$direccion);
