@@ -4,7 +4,7 @@
 	include_once("inc/funciones.php");
 	
 	$titulo = "Inicio de sesión";
-	$pagina = "Regístrate";
+	$pagina = "registrate";
 	
 	include_once("inc/encabezado.php");
 	
@@ -40,8 +40,11 @@
     <label for="telefono">Teléfono</label>
     <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $telefono; ?>" />
   </div>
+	
+	 <input type="hidden" name="recaptcha_response" id="recaptchaResponse" />
+	
 	<button type="submit" class="btn btn-primary" name="guardar" value="guardar">Guardar</button>
-	<a href='usuarios.php' class='btn btn-danger'>Cancelar</a>
+	<a href='index.php' class='btn btn-danger'>Cancelar</a>
 	</form>
 <?php 
 	}
@@ -49,7 +52,7 @@
 
 	<main role="main" class="container">
 		
-		<h1 class="mt-5">Insertar nuevo usuario</h1>
+		<h1 class="mt-5">Regístrate nuevo usuario</h1>
 		
 			<?php 
 			if(!isset($_REQUEST['guardar'])){
@@ -72,6 +75,19 @@
 				$telefono=recoge('telefono');
 				
 				$errores = "";
+				
+				//Validar recaptcha
+					$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify'; 
+					$recaptcha_secret = CLAVE_SECRETA; 
+					$recaptcha_response = recoge('recaptcha_response'); 
+					$recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response); 
+					$recaptcha = json_decode($recaptcha); 
+
+				if($recaptcha->score < 0.7){
+					$errores = $errores."<li>Detectado robot.</li>";
+				}
+				
+				
 				if($mail=="" or $password1=="" or $password2=="" or $nombre=="" or $apellidos=="" or $direccion=="" or $telefono=="" ){
 					$errores = $errores."<li>Todos los campos son obligatorios.</li>";
 				}

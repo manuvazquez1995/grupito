@@ -46,7 +46,7 @@ function formularioActualizarUsuario($mail,$password,$password1,$password2,$nomb
     <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $telefono; ?>" />
   </div>
 	<button type="submit" class="btn btn-primary" name="guardar" value="guardar">Guardar</button>
-	<a href='usuarios.php' class='btn btn-danger'>Cancelar</a>
+	<a href='productos.php' class='btn btn-danger'>Cancelar</a>
 	</form>
 <?php 
 	}

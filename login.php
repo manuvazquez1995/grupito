@@ -62,7 +62,7 @@ function formLogin($mail,$password){
 				
 			}else{
 				$_SESSION['mail']=$mail;
-				header("Location: productos.php");
+				header("Location: index.php");
 				
 			}
 
