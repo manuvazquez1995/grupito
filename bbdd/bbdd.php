@@ -221,6 +221,47 @@ function insertarUsuario($mail,$password2,$nombre,$apellidos,$direccion,$telefon
 
 
 
+function insertarPedido($idUsuario, $detallePedido, $total){
+		$con = conectarBD();
+		
+		try{
+			$conexion -> beginTransaction();
+			$sql = "INSERT INTO pedidos (idUsuario, total) VALUES (:idUsuario, :total)";
+			
+			$sentencia = $conexion->prepare($sql);
+			
+			$sentencia -> bindParam(":idUsuario", $idUsuario);
+			$sentencia -> bindParam(":total", $total);
+			
+			$sentencia -> execute();
+			$idPedido = $conexion->lastInsertId();
+			
+			foreach($detallePedido as $idProducto=>$cantidad){
+				$producto = seleccionarProducto($idProducto);
+				$precio = $producto['precioOferta'];
+				
+				$sql2="INSERT INTO detallePedido (idPedido,idProducto,cantidad,precio) VALUES (:idPedido,:idProducto,:cantidad,:precio)";
+				
+				$sentencia = $conexion->prepare($sql2);
+				
+				$sentencia -> bindParam(":idPedido", $idPedido);
+				$sentencia -> bindParam(":idProducto", $idProducto);
+				$sentencia -> bindParam(":cantidad", $cantidad);
+				$sentencia -> bindParam(":precio", $precio);
+				
+				$sentencia -> execute();
+			}
+			$conexion -> commit(); //Si va bien, lo inserta correctamente.
+			
+		}catch(PDOException $e){
+			$conexion -> rollback(); //En caso de que la transaccion fuera mal, la cancela y borra todo
+			echo "Error: Error al insertar el pedido: ".$e->getMessage();
+			file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+			exit;
+		}
+		
+		return $idPedido;
+}
 
 
 
