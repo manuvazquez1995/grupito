@@ -56,12 +56,15 @@ function formLogin($mail,$password){
 			$user = seleccionarUser($mail);
 			$userOK = password_verify($password, $user['password']);
 			
+			
 			if($userOK == FALSE){
 				echo "<div class=\"alert alert-danger\" role=\"alert\">ERROR: mail inexistente o mal introducido</div>";
 				formLogin($mail,$password);
 				
 			}else{
-				$_SESSION['mail']=$mail;
+				$_SESSION['idUsuario']=$user['idUsuario'];
+				$_SESSION['mail']=$user['email'];
+				
 				header("Location: index.php");
 				
 			}

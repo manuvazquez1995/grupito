@@ -221,20 +221,21 @@ function insertarUsuario($mail,$password2,$nombre,$apellidos,$direccion,$telefon
 
 
 
+
 function insertarPedido($idUsuario, $detallePedido, $total){
 		$con = conectarBD();
 		
 		try{
-			$conexion -> beginTransaction();
+			$con -> beginTransaction(); //Inicializa la transaccion
 			$sql = "INSERT INTO pedidos (idUsuario, total) VALUES (:idUsuario, :total)";
 			
-			$sentencia = $conexion->prepare($sql);
+			$sentencia = $con->prepare($sql);
 			
 			$sentencia -> bindParam(":idUsuario", $idUsuario);
 			$sentencia -> bindParam(":total", $total);
 			
 			$sentencia -> execute();
-			$idPedido = $conexion->lastInsertId();
+			$idPedido = $con->lastInsertId(); //Devuelve el ID del último pedido insertado para utilizarlo en el foreach.
 			
 			foreach($detallePedido as $idProducto=>$cantidad){
 				$producto = seleccionarProducto($idProducto);
@@ -242,7 +243,7 @@ function insertarPedido($idUsuario, $detallePedido, $total){
 				
 				$sql2="INSERT INTO detallePedido (idPedido,idProducto,cantidad,precio) VALUES (:idPedido,:idProducto,:cantidad,:precio)";
 				
-				$sentencia = $conexion->prepare($sql2);
+				$sentencia = $con->prepare($sql2);
 				
 				$sentencia -> bindParam(":idPedido", $idPedido);
 				$sentencia -> bindParam(":idProducto", $idProducto);
@@ -251,7 +252,7 @@ function insertarPedido($idUsuario, $detallePedido, $total){
 				
 				$sentencia -> execute();
 			}
-			$conexion -> commit(); //Si va bien, lo inserta correctamente.
+			$con -> commit(); //Si va bien, lo inserta correctamente.
 			
 		}catch(PDOException $e){
 			$conexion -> rollback(); //En caso de que la transaccion fuera mal, la cancela y borra todo

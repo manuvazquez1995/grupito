@@ -1,7 +1,7 @@
 <?php session_start(); 
 	
-	if(isset($_SESSION['mail'])){
-		unset($_SESSION['mail']);
+	if(isset($_SESSION['idUsuario'])){
+		unset($_SESSION['idUsuario']);
 		header("Location:index.php");
 		
 	}
