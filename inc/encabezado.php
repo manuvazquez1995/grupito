@@ -94,7 +94,7 @@
 			</li>
 			
 			<?php 
-				if(isset($_SESSION['mail'])){
+				if(isset($_SESSION['idUsuario'])){
 					$mail = $_SESSION['mail'];
 			?>		
 					<li class="nav-item dropdown">

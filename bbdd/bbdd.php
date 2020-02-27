@@ -266,6 +266,65 @@ function insertarPedido($idUsuario, $detallePedido, $total){
 
 
 
+//Para la pagina misPedidos.php
+function mostrarPedidos($idUsuario){
+	$con = conectarBD();
+	
+	try{
+			
+			$sql = "SELECT idPedido,fecha,estado,total FROM pedidos WHERE idUsuario=:idUsuario";
+			
+			$stmt = $con->prepare($sql);
+			
+			$stmt->bindParam(":idUsuario",$idUsuario);
+			
+			$stmt->execute();
+			
+			$rows = $stmt -> fetchAll(PDO::FETCH_ASSOC); 
+			
+		}catch(PDOException $e){
+			echo "Error: Error al mostrar los pedido: ".$e->getMessage();
+			file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+			exit;
+		}
+	
+	return $rows;
+}
+
+
+
+//Para la pagina de detallePedido.php
+function detallePedido($idPedido){
+	$con = conectarBD();
+	
+	try{
+			
+			$sql = "SELECT * FROM detallepedido WHERE idPedido=:idPedido";
+			
+			$stmt = $con->prepare($sql);
+			
+			$stmt->bindParam(":idPedido",$idPedido);
+			
+			$stmt->execute();
+			
+			$row = $stmt -> fetch(PDO::FETCH_ASSOC); 
+			
+		}catch(PDOException $e){
+			echo "Error: Error al mostrar los detalles del pedido: ".$e->getMessage();
+			file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+			exit;
+		}
+	
+	return $row;
+}
+
+
+
+
+
+
+
+
 
 
 
