@@ -41,9 +41,27 @@
 			</tr>
 		</thead>
 		<tbody>
+		<?php
+			$detallePedidos=detallePedido($idPedido);
 		
-
-
+			foreach($detallePedidos as $detallePedido){
+				$idDetallePedido = $detallePedido['idDetallePedido'];
+				$idPedido = $detallePedido['idPedido'];
+				$idProducto = $detallePedido['idProducto'];
+				$cantidad = $detallePedido['cantidad'];
+				$precio = $detallePedido['precio'];
+			?>
+				<tr>
+						<td scope="col"><?php echo $idPedido; ?></td>
+						<td scope="col"><?php echo $idProducto; ?></td>
+						<td scope="col"><?php echo $cantidad; ?></td>
+						<td scope="col"><?php echo $precio; ?></td>
+				<tr>
+					
+			<?php
+			}
+			
+		?>
 	</tbody>
 
 	</table>	

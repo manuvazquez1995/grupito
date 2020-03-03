@@ -307,7 +307,7 @@ function detallePedido($idPedido){
 			
 			$stmt->execute();
 			
-			$row = $stmt -> fetch(PDO::FETCH_ASSOC); 
+			$rows = $stmt -> fetchAll(PDO::FETCH_ASSOC); 
 			
 		}catch(PDOException $e){
 			echo "Error: Error al mostrar los detalles del pedido: ".$e->getMessage();
@@ -315,7 +315,7 @@ function detallePedido($idPedido){
 			exit;
 		}
 	
-	return $row;
+	return $rows;
 }
 
 

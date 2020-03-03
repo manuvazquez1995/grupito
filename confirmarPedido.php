@@ -52,6 +52,8 @@
 					if($pedidoOK){
 							echo "El pedido fue insertado";
 							
+							
+							
 						
 					}else{
 							echo "El pedido NO fue insetado";
