@@ -61,6 +61,60 @@ function recoge($var, $m = "")
 	}
 ?>
 
+<?php
+function imprimirCarrito($carrito){
+?>	
+<div class="row px-5">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Nombre</th>
+				<th scope="col">Precio</th>
+				<th scope="col">Cantidad</th>
+				<th scope="col">Subtotal</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php 
+				$total = 0;
+			
+				foreach($carrito as $id => $cantidad){
+					$producto = seleccionarProducto($id);
+					
+					$nombre = $producto['nombre'];
+					$precio = $producto['precioOferta'];
+					$subtotal = $precio * $cantidad;
+					$total = $total + $subtotal;
+				
+			?>
+			<tr>
+				<td scope="col"><a href="producto.php?id=<?php echo $producto['idProducto']; ?>"><?php echo $nombre; ?></a></td>
+				<td scope="col"><?php echo $precio; ?></td>
+				<td scope="col"><a href="procesarCarrito.php?id=<?php echo $id; ?>&op=remove"><i class="far fa-minus-square"></i></a>  <?php echo $cantidad; ?>  <a href="procesarCarrito.php?id=<?php echo $id; ?>&op=add"><i class="far fa-plus-square"></a></i></td>
+				<td scope="col"><?php echo $subtotal; ?></td>
+			</tr>
+			<?php
+				}
+			?>
+			
+		</tbody>
+		<tfoot>
+			<tr>
+				<th scope="row" colspan="3" class="text-right">Total</th>
+				<td>
+					<?php
+						echo $total;
+					?>
+					€
+				</td>
+			</tr>
+		</tfoot>
+		
+	</table>
+<?php
+}
+?>
+
 
 
 

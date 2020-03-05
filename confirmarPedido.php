@@ -6,6 +6,7 @@
 	include_once("inc/encabezado.php");
 	include_once("inc/funciones.php");
 	include_once("bbdd/bbdd.php");
+	include_once("enviarMail.php");
 
 
 ?>
@@ -47,13 +48,25 @@
 						$total = $total + $subtotal;
 					}
 					
-					$pedidoOK=insertarPedido($idUsuario, $detallePedido, $total);
+					$idPedido=insertarPedido($idUsuario, $detallePedido, $total);
 					
-					if($pedidoOK){
-							echo "El pedido fue insertado";
+					if($idPedido){
+							echo "El pedido nº $idPedido se ha realizado correctamente";
 							
+							$mailUser = $_SESSION['mail'];
+							$asunto = "Departamento de ventas de Mi Grupito";
 							
+							$mensaje = "Estimado cliente $mail.".imprimirCarrito($_SESSION['carrito'])."
+													Le comunicamos que su pedido  <strong>$idPedido</strong> se ha realizado correctamente
+													y procederemos a enviárselo.<br /> Puede hacer un seguimiento de la compra en nuestra página
+													en el apartado Mis Pedidos.
+													Muchas gracias con confiar en nosotros
+													Un cordial saludo.
+													";
 							
+							enviarMail($mailUser,$asunto,$mensaje);
+							
+							unset($_SESSION['carrito']); //Una vez confirmado el pedido, borra todo lo que haya en el carrito
 						
 					}else{
 							echo "El pedido NO fue insetado";
@@ -63,11 +76,6 @@
 				}
 				
 			}
-
-
-
-
-
 		?>
 
   </div> <!-- /container -->

@@ -55,7 +55,7 @@
 				<td scope="col"><?php echo $idPedido; ?></td>
 				<td scope="col"><?php echo $fecha; ?></td>
 				<td scope="col"><?php echo $estado; ?></td>
-				<td scope="col"><?php echo $total; ?></td>
+				<td scope="col"><?php echo "$total &euro;"; ?></td>
 				<td scope="col"><a href="detallePedido.php?idPedido=<?php echo $idPedido; ?>" class="btn btn-success ml-3">Detalles</a></td>
 			<tr>
 		<?php

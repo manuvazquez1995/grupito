@@ -44,27 +44,34 @@
 		<?php
 			$detallePedidos=detallePedido($idPedido);
 		
+			$total = 0;
+		
 			foreach($detallePedidos as $detallePedido){
 				$idDetallePedido = $detallePedido['idDetallePedido'];
 				$idPedido = $detallePedido['idPedido'];
 				$idProducto = $detallePedido['idProducto'];
 				$cantidad = $detallePedido['cantidad'];
 				$precio = $detallePedido['precio'];
+				$total = $total + $precio;
 			?>
 				<tr>
 						<td scope="col"><?php echo $idPedido; ?></td>
 						<td scope="col"><?php echo $idProducto; ?></td>
 						<td scope="col"><?php echo $cantidad; ?></td>
-						<td scope="col"><?php echo $precio; ?></td>
+						<td scope="col"><?php echo "$precio &euro;"; ?></td>
 				<tr>
-					
 			<?php
 			}
 			
 		?>
+		<tr>
+			<td scope="col">TOTAL: <?php echo "$total &euro;"; ?></td>
+		</tr>
 	</tbody>
-
-	</table>	
+	</table>
+	
+	<a href='misPedidos.php' class='btn btn-primary'>Mis pedidos</a>
+		
 		</div>
 	</div>
 </main>

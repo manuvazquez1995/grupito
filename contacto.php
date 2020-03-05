@@ -1,7 +1,7 @@
 <?php session_start();
 require_once "bbdd/bbdd.php";
 require_once "inc/funciones.php";
-require_once "enviarMail/index.php";
+require_once "enviarMail.php";
 
 $pagina = "contacto";
 $titulo = "Contacte con nosotros";

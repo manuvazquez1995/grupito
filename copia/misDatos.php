@@ -17,7 +17,7 @@ function formularioActualizarUsuario($mail,$password,$password1,$password2,$nomb
     <input type="text" class="form-control" id="mail" name="mail" autofocus="autofocus" value="<?php echo $mail; ?>" readonly='readonly' />
   </div>
   <div>
-	<!--<div class="form-group">
+	<div class="form-group">
     <label for="password">Contraseña actual</label>
     <input type="password" class="form-control" id="password" name="password" />
   </div>
@@ -28,25 +28,25 @@ function formularioActualizarUsuario($mail,$password,$password1,$password2,$nomb
 	<div class="form-group">
     <label for="password2">Repite contraseña nueva</label>
     <input type="password" class="form-control" id="password2" name="password2" />
-  </div>-->
+  </div>
   <div class="form-group">
     <label for="nombre">Nombre</label>
-    <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $nombre; ?>" readonly='readonly' />
+    <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $nombre; ?>"/>
   </div>
   <div class="form-group">
     <label for="apellidos">Apellidos</label>
-    <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $apellidos; ?>" readonly='readonly'/>
+    <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $apellidos; ?>"/>
   </div>
   <div class="form-group">
     <label for="direccion">Dirección</label>
-    <input type="text" class="form-control" id="direccion" name="direccion" value="<?php echo $direccion; ?>" readonly='readonly'/>
+    <input type="text" class="form-control" id="direccion" name="direccion" value="<?php echo $direccion; ?>" />
   </div>
   <div class="form-group">
     <label for="telefono">Teléfono</label>
-    <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $telefono; ?>" readonly='readonly'/>
+    <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $telefono; ?>" />
   </div>
 	<button type="submit" class="btn btn-primary" name="guardar" value="guardar">Guardar</button>
-	<a href='index.php' class='btn btn-danger'>Inicio</a>
+	<a href='productos.php' class='btn btn-danger'>Cancelar</a>
 	</form>
 <?php 
 	}
