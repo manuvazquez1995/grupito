@@ -132,9 +132,81 @@ function actualizarUser($mail,$newPassword1,$nombre,$apellidos,$direccion,$telef
 
 
 
+//Para la pagina Pedidos.php de la parte admin
+function pedidos(){
+	$con = conectarBD();
+	
+	try{
+			
+			$sql = "SELECT * FROM pedidos";
+			
+			$stmt = $con->prepare($sql);
+			
+			$stmt->execute();
+			
+			$rows = $stmt -> fetchAll(PDO::FETCH_ASSOC); 
+			
+		}catch(PDOException $e){
+			echo "Error: Error al mostrar los pedidos: ".$e->getMessage();
+			file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+			exit;
+		}
+	
+	return $rows;
+}
 
 
 
+// Para saber el usuario del pedido
+function usuarioPedido($idUsuario){
+	$con = conectarBD();
+	
+	try{
+			
+			$sql = "SELECT * FROM usuarios WHERE idUsuario=:idUsuario";
+			
+			$stmt = $con->prepare($sql);
+			
+			$stmt->bindParam(":idUsuario",$idUsuario);
+			
+			$stmt->execute();
+			
+			$row = $stmt -> fetch(PDO::FETCH_ASSOC); 
+			
+		}catch(PDOException $e){
+			echo "Error: Error al mostrar el nombre del usuario: ".$e->getMessage();
+			file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+			exit;
+		}
+	
+	return $row;
+}
+
+
+// Para la pagina detallePedidos.php de la parte admin
+function detallePedido($idPedido){
+	$con = conectarBD();
+	
+	try{
+			
+			$sql = "SELECT * FROM detallepedido WHERE idPedido=:idPedido";
+			
+			$stmt = $con->prepare($sql);
+			
+			$stmt->bindParam(":idPedido",$idPedido);
+			
+			$stmt->execute();
+			
+			$rows = $stmt -> fetchAll(PDO::FETCH_ASSOC); 
+			
+		}catch(PDOException $e){
+			echo "Error: Error al mostrar los detalles del pedido: ".$e->getMessage();
+			file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+			exit;
+		}
+	
+	return $rows;
+}
 
 
 

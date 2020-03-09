@@ -1,8 +1,8 @@
 <?php session_start();
 
-	require_once "inc/funciones.php";
-	require_once "inc/bbdd.php";
-	require_once "inc/encabezado.php";
+	include_once("inc/bbdd.php");
+	include_once("inc/funciones.php");
+	include_once("inc/encabezado.php");
 
 
 function formLogin($mail,$password){ ?>
