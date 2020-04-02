@@ -93,19 +93,16 @@ function seleccionarUser($mail){
 }
 
 
-//FUNCIÓN PARA ACTUALIZAR UN USUARIO
-function actualizarUser($mail,$password2,$nombre,$apellidos,$direccion,$telefono){
+//FUNCIÓN PARA ACTUALIZAR LOS DATOS DE UN USUARIO.
+function actualizarDatosUser($mail,$nombre,$apellidos,$direccion,$telefono){
 		$con = conectarBD();
 		
-		$pass = password_hash($password2, PASSWORD_DEFAULT);
-		
 		try{
-		$sql = "UPDATE usuarios SET email=:mail, password=:pass, nombre=:nombre, apellidos=:apellidos, direccion=:direccion, telefono=:telefono WHERE email=:mail";
+		$sql = "UPDATE usuarios SET email=:mail, nombre=:nombre, apellidos=:apellidos, direccion=:direccion, telefono=:telefono WHERE email=:mail";
 		
 		$stmt=$con->prepare($sql);
 		
 		$stmt->bindParam(':mail',$mail);
-		$stmt->bindParam(':pass',$pass);
 		$stmt->bindParam(':nombre',$nombre);
 		$stmt->bindParam(':apellidos',$apellidos);
 		$stmt->bindParam(':direccion',$direccion);
@@ -120,6 +117,32 @@ function actualizarUser($mail,$password2,$nombre,$apellidos,$direccion,$telefono
 		}
 		return $stmt->rowCount();
 }
+
+//FUNCIÓN PARA ACTUALIZAR LA CONTRASEÑA DE UN USUARIO
+function actualizarPassUser($mail, $password2){
+		$con = conectarBD();
+		
+		$pass = password_hash($password2, PASSWORD_DEFAULT);
+		
+		try{
+		$sql = "UPDATE usuarios SET password=:pass WHERE email=:mail";
+		
+		$stmt=$con->prepare($sql);
+		
+		$stmt->bindParam(':mail',$mail);
+		$stmt->bindParam(':pass',$pass);
+		
+		$stmt->execute(); 
+		
+		}catch(PDOException $e){
+				echo "Error: Error al actualizar el usuario: ".$e->getMessage();
+				file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+				exit;
+		}
+		return $stmt->rowCount();
+}
+
+
 
 
 // PARA SACAR LAS OFERTAS DEL INDEX
@@ -255,7 +278,7 @@ function insertarPedido($idUsuario, $detallePedido, $total){
 			$con -> commit(); //Si va bien, lo inserta correctamente.
 			
 		}catch(PDOException $e){
-			$conexion -> rollback(); //En caso de que la transaccion fuera mal, la cancela y borra todo
+			$con -> rollback(); //En caso de que la transaccion fuera mal, la cancela y borra todo
 			echo "Error: Error al insertar el pedido: ".$e->getMessage();
 			file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
 			exit;
@@ -299,7 +322,12 @@ function detallePedido($idPedido){
 	
 	try{
 			
-			$sql = "SELECT * FROM detallepedido WHERE idPedido=:idPedido";
+			//$sql = "SELECT * FROM detallepedido WHERE idPedido=:idPedido";
+			$sql = "SELECT d.idDetallePedido, d.idPedido, d.idProducto, p.nombre, d.cantidad, d.precio
+							FROM detallepedido d 
+							JOIN productos p 
+							ON p.idProducto=d.idProducto
+							WHERE d.idPedido=:idPedido";
 			
 			$stmt = $con->prepare($sql);
 			

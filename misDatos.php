@@ -17,21 +17,9 @@ function formularioActualizarUsuario($mail,$password,$password1,$password2,$nomb
     <input type="text" class="form-control" id="mail" name="mail" autofocus="autofocus" value="<?php echo $mail; ?>" readonly='readonly' />
   </div>
   <div>
-	<!--<div class="form-group">
-    <label for="password">Contraseña actual</label>
-    <input type="password" class="form-control" id="password" name="password" />
-  </div>
-	<div class="form-group">
-    <label for="password1">Contraseña nueva</label>
-    <input type="password" class="form-control" id="password1" name="password1" />
-  </div>
-	<div class="form-group">
-    <label for="password2">Repite contraseña nueva</label>
-    <input type="password" class="form-control" id="password2" name="password2" />
-  </div>-->
   <div class="form-group">
     <label for="nombre">Nombre</label>
-    <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $nombre; ?>" readonly='readonly' />
+    <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $nombre; ?>"  readonly='readonly'/>
   </div>
   <div class="form-group">
     <label for="apellidos">Apellidos</label>
@@ -45,7 +33,8 @@ function formularioActualizarUsuario($mail,$password,$password1,$password2,$nomb
     <label for="telefono">Teléfono</label>
     <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $telefono; ?>" readonly='readonly'/>
   </div>
-	<button type="submit" class="btn btn-primary" name="guardar" value="guardar">Guardar</button>
+	<a href='modificarDatos.php?mail=<?php echo $mail; ?>' class='btn btn-primary'>Modificar</a>
+	<a href='modificarPass.php?mail=<?php echo $mail; ?>' class='btn btn-warning'>Cambiar contraseña</a>
 	<a href='index.php' class='btn btn-danger'>Inicio</a>
 	</form>
 <?php 
@@ -53,7 +42,7 @@ function formularioActualizarUsuario($mail,$password,$password1,$password2,$nomb
 ?>
 	
 	<main role="main" class="container">
-    <h1 class="mt-5">Actualizar usuario</h1>
+    <h1 class="mt-5">Datos del usuario</h1>
 	
 	<?php 
 		if(!isset($_REQUEST["guardar"])){
@@ -111,18 +100,6 @@ function formularioActualizarUsuario($mail,$password,$password1,$password2,$nomb
 			echo "<div class=\"alert alert-danger\" role=\"alert\">La contraseña no coincide con la guardada en la base de datos</div>";
 			formularioActualizarUsuario($mail,$password,$password1,$password2,$nombre,$apellidos,$direccion,$telefono);
 							
-			}else{
-				$ok = actualizarUser($mail,$password2,$nombre,$apellidos,$direccion,$telefono);
-				if($ok){
-					echo "<div class=\"alert alert-success\" role=\"alert\">Usuario $mail actualizado correctamente</div>";
-					echo "<p><a href='productos.php' class='btn btn-primary'>Volver al productos</a></p>";
-							
-				}else{
-					echo "<div class=\"alert alert-danger\" role=\"alert\">ERROR: Usuario NO actualizado</div>";
-					echo "";
-					formularioActualizarUsuario($mail,$password,$password1,$password2,$nombre,$apellidos,$direccion,$telefono);
-				}
-										
 			}
 			
 		}

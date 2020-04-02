@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-01-2020 a las 14:02:00
+-- Tiempo de generación: 02-04-2020 a las 23:15:28
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.4
 
@@ -25,6 +25,30 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `admin`
+--
+
+CREATE TABLE `admin` (
+  `idUsuario` int(11) NOT NULL,
+  `email` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `password` varchar(250) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `apellidos` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `direccion` varchar(250) COLLATE utf8_spanish_ci NOT NULL,
+  `telefono` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `online` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `admin`
+--
+
+INSERT INTO `admin` (`idUsuario`, `email`, `password`, `nombre`, `apellidos`, `direccion`, `telefono`, `online`) VALUES
+(3, 'administrador@tienda.com', '$2y$10$k9Dj19oGzq/ykEoDSHF9QOIugeE4PYEa3ir1vyhRLPRXZsNdwxA0O', 'Jelorio', 'López López', 'Calle no se sabe', '666666666', 0);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `detallepedido`
 --
 
@@ -35,6 +59,38 @@ CREATE TABLE `detallepedido` (
   `cantidad` int(11) NOT NULL,
   `precio` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `detallepedido`
+--
+
+INSERT INTO `detallepedido` (`idDetallePedido`, `idPedido`, `idProducto`, `cantidad`, `precio`) VALUES
+(8, 5, 1, 1, '6.00'),
+(9, 5, 6, 4, '8.50'),
+(10, 6, 1, 1, '6.00'),
+(11, 7, 2, 1, '49.99'),
+(12, 8, 1, 2, '6.00'),
+(14, 13, 1, 2, '6.00'),
+(15, 13, 3, 1, '9.99');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estadopedidos`
+--
+
+CREATE TABLE `estadopedidos` (
+  `idEstado` int(11) NOT NULL,
+  `estado` varchar(20) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `estadopedidos`
+--
+
+INSERT INTO `estadopedidos` (`idEstado`, `estado`) VALUES
+(1, 'ENVIADO'),
+(2, 'ANULADO');
 
 -- --------------------------------------------------------
 
@@ -47,8 +103,20 @@ CREATE TABLE `pedidos` (
   `idUsuario` int(11) NOT NULL,
   `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `total` decimal(10,2) NOT NULL,
-  `estado` varchar(50) COLLATE utf8_spanish_ci NOT NULL
+  `estado` int(11) NOT NULL DEFAULT '1',
+  `online` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `pedidos`
+--
+
+INSERT INTO `pedidos` (`idPedido`, `idUsuario`, `fecha`, `total`, `estado`, `online`) VALUES
+(5, 3, '2020-03-05 13:28:23', '40.00', 1, 0),
+(6, 3, '2020-03-05 13:57:38', '6.00', 1, 0),
+(7, 3, '2020-03-05 13:58:28', '49.99', 2, 0),
+(8, 3, '2020-03-05 14:10:17', '12.00', 2, 0),
+(13, 4, '2020-04-02 18:14:42', '21.99', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -92,19 +160,28 @@ CREATE TABLE `usuarios` (
   `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `apellidos` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `direccion` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `telefono` varchar(20) COLLATE utf8_spanish_ci NOT NULL
+  `telefono` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `online` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`idUsuario`, `email`, `password`, `nombre`, `apellidos`, `direccion`, `telefono`) VALUES
-(1, 'manu@tienda.com', 'abc123.', 'Manuel', 'Vázquez Suárez', 'Redondela manda nº 1', '666666666');
+INSERT INTO `usuarios` (`idUsuario`, `email`, `password`, `nombre`, `apellidos`, `direccion`, `telefono`, `online`) VALUES
+(2, 'manuel@tienda.com', '$2y$10$UYVp2QXJ.w.hYl16Me5PN.AUByqByr/1x3gb92p5FcRM3aZlInF/O', 'Manuel', 'Vázquez Suárezzx', 'Dirección 27', '9999999999', 0),
+(3, 'manuvazquez1995@gmail.com', '$2y$10$He7NNx33K/C.Xbn3BktfpeEScuCbB/ZvM4uWymsxL48guVnetqTvy', 'Manuel', 'Va Su', 'Calle Redondela, Nº666', '666666666', 0),
+(4, 'manu@tienda.com', '$2y$10$v5KFqV.UIZzTwZ7Djgc3e.beYmLupaVeGONSbEIQcgjEQSU8Kfq/W', 'Manu', 'Va Su', 'Calle 14', '111222333', 0);
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`idUsuario`);
 
 --
 -- Indices de la tabla `detallepedido`
@@ -115,11 +192,18 @@ ALTER TABLE `detallepedido`
   ADD KEY `idProducto` (`idProducto`);
 
 --
+-- Indices de la tabla `estadopedidos`
+--
+ALTER TABLE `estadopedidos`
+  ADD PRIMARY KEY (`idEstado`);
+
+--
 -- Indices de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
   ADD PRIMARY KEY (`idPedido`),
-  ADD KEY `idUsuario` (`idUsuario`);
+  ADD KEY `idUsuario` (`idUsuario`),
+  ADD KEY `estado` (`estado`);
 
 --
 -- Indices de la tabla `productos`
@@ -139,16 +223,28 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de la tabla `detallepedido`
 --
 ALTER TABLE `detallepedido`
-  MODIFY `idDetallePedido` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idDetallePedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT de la tabla `estadopedidos`
+--
+ALTER TABLE `estadopedidos`
+  MODIFY `idEstado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -160,7 +256,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -177,7 +273,8 @@ ALTER TABLE `detallepedido`
 -- Filtros para la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  ADD CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`);
+  ADD CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`),
+  ADD CONSTRAINT `pedidos_ibfk_2` FOREIGN KEY (`estado`) REFERENCES `estadopedidos` (`idEstado`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

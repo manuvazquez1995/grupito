@@ -48,7 +48,7 @@ function formLogin($mail,$password){ ?>
 			formLogin($mail,$password);
 			
 		}else{
-			$user = seleccionarUser($mail);
+			$user = seleccionarAdmin($mail);
 			$userOK = password_verify($password, $user['password']);
 			
 			if($userOK == FALSE){

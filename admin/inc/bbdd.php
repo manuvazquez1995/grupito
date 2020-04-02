@@ -47,6 +47,37 @@ function seleccionarTodosProductos(){
 }
 
 
+function insertarUsuario($mail,$password2,$nombre,$apellidos,$direccion,$telefono){
+
+	$con = conectarBD();
+	
+	$pass = password_hash($password2, PASSWORD_DEFAULT);
+	
+	try{
+				$sql = "INSERT INTO usuarios (email,password,nombre,apellidos,direccion,telefono) VALUES (:mail,:pass,:nombre,:apellidos,:direccion,:telefono);";
+				
+				$stmt = $con->prepare($sql);
+				
+				$stmt->bindParam(':mail',$mail);
+				$stmt->bindParam(':pass',$pass);
+				$stmt->bindParam(':nombre',$nombre);
+				$stmt->bindParam(':apellidos',$apellidos);
+				$stmt->bindParam(':direccion',$direccion);
+				$stmt->bindParam(':telefono',$telefono);
+				
+				$stmt->execute();
+		
+		}catch(PDOException $e){
+				echo "Error: Error al insertar un usuario: ".$e->getMessage();
+				file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+				exit;
+		}
+		return $stmt->rowCount();
+}
+
+
+
+
 
 // FUNCIÓN PARA SELECCIONAR TODOS LOS USUARIOS
 function seleccionarTodosUsuarios(){
@@ -93,7 +124,7 @@ function seleccionarUser($mail){
 }
 
 
-//FUNCIÓN PARA ACTUALIZAR UN USUARIO
+//FUNCIÓN PARA ACTUALIZAR UN USUARIO (las dos siguientes)
 function actualizarUser($mail,$newPassword1,$nombre,$apellidos,$direccion,$telefono,$online){
 		$con = conectarBD();
 		
@@ -122,13 +153,103 @@ function actualizarUser($mail,$newPassword1,$nombre,$apellidos,$direccion,$telef
 		return $stmt->rowCount();
 }
 
-//$idUsuario = $usuario['idUsuario'];
-//				$mail = $usuario['email'];
-//					$password = $usuario['password'];
-//					$nombre = $usuario['nombre'];
-//				$apellidos = $usuario['apellidos'];
-//				$direccion = $usuario['direccion'];
-//				$telefono = $usuario['telefono']
+function actualizarDatosUser($mail,$nombre,$apellidos,$direccion,$telefono){
+		$con = conectarBD();
+		
+		try{
+		$sql = "UPDATE usuarios SET email=:mail, nombre=:nombre, apellidos=:apellidos, direccion=:direccion, telefono=:telefono WHERE email=:mail";
+		
+		$stmt=$con->prepare($sql);
+		
+		$stmt->bindParam(':mail',$mail);
+		$stmt->bindParam(':nombre',$nombre);
+		$stmt->bindParam(':apellidos',$apellidos);
+		$stmt->bindParam(':direccion',$direccion);
+		$stmt->bindParam(':telefono',$telefono);
+		
+		$stmt->execute(); 
+		
+		}catch(PDOException $e){
+				echo "Error: Error al actualizar el usuario: ".$e->getMessage();
+				file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+				exit;
+		}
+		return $stmt->rowCount();
+}
+
+//FUNCIÓN PARA BORRAR UN USUARIO
+function borrarUsuario($mail){
+		
+		$con = conectarBD();
+		
+		try{
+				$sql = "DELETE FROM usuarios WHERE email=:mail";
+				
+				$stmt=$con->prepare($sql);
+				$stmt->bindParam(':mail',$mail);
+				$stmt->execute();
+				
+				//$row = $stmt -> fetch(PDO::FETCH_ASSOC); //Si sabemos que devuelve una sola fila, no se puede poner "fetchAll"
+		
+		}catch(PDOException $e){
+				echo "Error: Error al borrar el usuario: ".$e->getMessage();
+				file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+				exit;
+		}
+	return $row;
+}
+
+//FUNCIÓN PARA COMPROBAR EL ADMINISTRADOR
+function seleccionarAdmin($mail){
+		
+		$con = conectarBD();
+		
+		try{
+				$sql = "SELECT * FROM admin WHERE email=:mail";
+				
+				$stmt=$con->prepare($sql);
+				$stmt->bindParam(':mail',$mail);
+				$stmt->execute();
+				
+				$row = $stmt -> fetch(PDO::FETCH_ASSOC); //Si sabemos que devuelve una sola fila, no se puede poner "fetchAll"
+		
+		}catch(PDOException $e){
+				echo "Error: Error al seleccionar el administrador: ".$e->getMessage();
+				file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+				exit;
+		}
+	return $row;
+}
+
+
+//INSERTAR UN NUEVO ADMINISTRADOR
+function insertarAdmin($mail,$password2,$nombre,$apellidos,$direccion,$telefono){
+
+	$con = conectarBD();
+	
+	$pass = password_hash($password2, PASSWORD_DEFAULT);
+	
+	try{
+				$sql = "INSERT INTO admin (email,password,nombre,apellidos,direccion,telefono) VALUES (:mail,:pass,:nombre,:apellidos,:direccion,:telefono);";
+				
+				$stmt = $con->prepare($sql);
+				
+				$stmt->bindParam(':mail',$mail);
+				$stmt->bindParam(':pass',$pass);
+				$stmt->bindParam(':nombre',$nombre);
+				$stmt->bindParam(':apellidos',$apellidos);
+				$stmt->bindParam(':direccion',$direccion);
+				$stmt->bindParam(':telefono',$telefono);
+				
+				$stmt->execute();
+		
+		}catch(PDOException $e){
+				echo "Error: Error al insertar un administrador: ".$e->getMessage();
+				file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+				exit;
+		}
+		return $stmt->rowCount();
+}
 
 
 
@@ -189,7 +310,11 @@ function detallePedido($idPedido){
 	
 	try{
 			
-			$sql = "SELECT * FROM detallepedido WHERE idPedido=:idPedido";
+			$sql = "SELECT d.idDetallePedido, d.idPedido, d.idProducto, p.nombre, d.cantidad, d.precio
+							FROM detallepedido d 
+							JOIN productos p 
+							ON p.idProducto=d.idProducto
+							WHERE d.idPedido=:idPedido";
 			
 			$stmt = $con->prepare($sql);
 			
@@ -209,7 +334,27 @@ function detallePedido($idPedido){
 }
 
 
+//Para anular pedido
+function anularPedido($idPedido, $valor){
+		$con = conectarBD();
+		
+		try{
+		$sql = "UPDATE pedidos SET estado=:valor WHERE idPedido=:idPedido";
+		
+		$stmt=$con->prepare($sql);
+		
+		$stmt->bindParam(':valor',$valor);
+		$stmt->bindParam(':idPedido',$idPedido);
 
+		$stmt->execute(); 
+		
+		}catch(PDOException $e){
+				echo "Error: Error al anular el pedido: ".$e->getMessage();
+				file_put_contents("PDOErrors.txt", "\r\n".date('j F, Y, g:i a ').$e->getMessage(), FILE_APPEND); //GUARDA LOS ERRORES EN UN LOG
+				exit;
+		}
+		return $stmt->rowCount();
+}
 
 
 

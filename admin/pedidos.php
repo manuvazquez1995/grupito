@@ -20,6 +20,11 @@
 	
 	<div class="container">
 	
+	<p>
+	 <a href='menu.php' class='btn btn-primary'>Menú</a>
+	 <a href='cerrarSesion.php' class='btn btn-danger'>Cerrar sesión</a>
+	</p>
+	
 	<div class="row px-5">
 	<table class="table table-striped">
 		<thead>

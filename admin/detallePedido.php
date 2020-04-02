@@ -35,6 +35,7 @@
 			<tr>
 				<th scope="col">IdPedido</th>
 				<th scope="col">IdProducto</th>
+				<th scope="col">Nombre</th>
 				<th scope="col">Cantidad</th>
 				<th scope="col">Precio</th>
 			</tr>
@@ -49,6 +50,7 @@
 				$idDetallePedido = $detallePedido['idDetallePedido'];
 				$idPedido = $detallePedido['idPedido'];
 				$idProducto = $detallePedido['idProducto'];
+				$nombre =  $detallePedido['nombre'];
 				$cantidad = $detallePedido['cantidad'];
 				$precio = $detallePedido['precio'];
 				$total = $total + $precio;
@@ -56,6 +58,7 @@
 				<tr>
 						<td scope="col"><?php echo $idPedido; ?></td>
 						<td scope="col"><?php echo $idProducto; ?></td>
+						<td scope="col"><?php echo $nombre; ?></td>
 						<td scope="col"><?php echo $cantidad; ?></td>
 						<td scope="col"><?php echo "$precio &euro;"; ?></td>
 				<tr>
@@ -69,7 +72,7 @@
 	</tbody>
 	</table>
 	
-	<a href='Pedidos.php' class='btn btn-primary'>Pedidos</a>
+	<p><a href='Pedidos.php' class='btn btn-primary'>Pedidos</a></p>
 		
 		</div>
 	</div>

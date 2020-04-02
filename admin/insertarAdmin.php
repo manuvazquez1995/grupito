@@ -11,16 +11,20 @@
 	}else{
 	
 	
-	function formularioInsertarUsuarios($mail,$password,$nombre,$apellidos,$direccion,$telefono){
+	function formularioInsertarAdmin($mail,$password1,$password2,$nombre,$apellidos,$direccion,$telefono){
 ?>
 	<form method="post">
 	<div class="form-group">
     <label for="mail">Email</label>
-    <input type="text" class="form-control" id="mail" name="mail" value="<?php echo $mail; ?>"  autofocus="autofocus"/>
+    <input type="text" class="form-control" id="mail" name="mail" value="<?php echo $mail; ?>" autofocus="autofocus"/>
   </div>	
-  <div class="form-group">
-    <label for="password">Contraseña</label>
-    <input type="password" class="form-control" id="password" name="password" />
+	<div class="form-group">
+    <label for="newPassword1">Contraseña</label>
+    <input type="password" class="form-control" id="newPassword1" name="newPassword1" />
+  </div>
+	<div class="form-group">
+    <label for="newPassword2">Repite contraseña nueva</label>
+    <input type="password" class="form-control" id="newPassword2" name="newPassword2" />
   </div>
   <div class="form-group">
     <label for="nombre">Nombre</label>
@@ -46,21 +50,23 @@
 ?>
 
 	<main role="main" class="container">
-    <h1 class="mt-5">Dar de alta a nuevo usuario</h1>
+    <h1 class="mt-5">Dar de alta a nuevo administrador</h1>
 	
 		<?php 
 			if(!isset($_REQUEST['guardar'])){
 				$mail = "";
-				$password= "";
+				$password1= "";
+				$password2="";
 				$nombre = "";
 				$apellidos = "";
 				$direccion="";
 				$telefono="";
-				formularioInsertarUsuarios($mail,$password,$nombre,$apellidos,$direccion,$telefono);
+				formularioInsertarAdmin($mail,$password1,$password2,$nombre,$apellidos,$direccion,$telefono);
 				
 			}else{
 				$mail = recoge('mail');
-				$password= recoge('password');
+				$password1= recoge('newPassword1');
+				$password2=recoge('newPassword2');
 				$nombre = recoge('nombre');
 				$apellidos = recoge('apellidos');
 				$direccion=recoge('direccion');
@@ -68,25 +74,25 @@
 				
 				$errores = "";
 				
-				if($mail=="" or $password=="" or $nombre=="" or $apellidos=="" or $direccion=="" or $telefono=="" ){
+				if($mail=="" or $password1=="" or $password2=="" or $nombre=="" or $apellidos=="" or $direccion=="" or $telefono=="" ){
 					$errores = $errores."<li>Todos los campos son obligatorios.</li>";
 				}
 				
 				if($errores != ""){
 					echo "<h2>Errores</h2> <ul>$errores</ul>";
-					formularioInsertarUsuarios($mail,$password,$nombre,$apellidos,$direccion,$telefono);
+					formularioInsertarAdmin($mail,$password1,$password2,$nombre,$apellidos,$direccion,$telefono);
 					
 				}else{
-					$userOK = insertarUsuario($mail,$password,$nombre,$apellidos,$direccion,$telefono);
+					$userOK = insertarAdmin($mail,$password2,$nombre,$apellidos,$direccion,$telefono);
 					
 					if($userOK){
-						echo "<div class=\"alert alert-success\" role=\"alert\">El usuario <strong>$mail</strong> insertado correctamente</div>";
-						echo "<p><a href='usuarios.php' class='btn btn-primary'>Usuarios</a></p>";
+						echo "<div class=\"alert alert-success\" role=\"alert\">El usuario administrador <strong>$mail</strong> insertado correctamente</div>";
+						echo "<p><a href='usuarios.php' class='btn btn-primary'>Iniciar sesión</a></p>";
 						
 					}else{
-						echo "<div class=\"alert alert-danger\" role=\"alert\">ERROR: Usuario NO insertado</div>";
+						echo "<div class=\"alert alert-danger\" role=\"alert\">ERROR: Usuario administrador NO insertado</div>";
 						echo "";
-						formularioInsertarUsuarios($mail,$password,$nombre,$apellidos,$direccion,$telefono);
+						formularioInsertarAdmin($mail,$password1,$password2,$nombre,$apellidos,$direccion,$telefono);
 					}
 					
 				}
